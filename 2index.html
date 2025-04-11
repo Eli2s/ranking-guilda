@@ -7,21 +7,71 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      text-align: center;
       background-color: #f0f0f0;
+      text-align: center;
     }
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
+
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
       background-color: white;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #ffeb3b;
+      color: red;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    .bold {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Ranking da Guilda - Atualizado em Tempo Real</h1>
-  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQlA9CQdoCJsbFct3EYCDTPOkIRgYPnVNWA82aHM64ihENZuT7kWA2Jc2ySqOwbXjbE1F4QKUi6m7kl/pubhtml?widget=true&amp;headers=false"></iframe>
+  <h1>Ranking da Guilda</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>CHAOS</th>
+        <th>PENA</th>
+        <th>CONDOR</th>
+        <th>AWAKE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Lissa</td><td>ShazamAgroboy</td><td>Lissa</td><td class="bold">Lissa</td></tr>
+      <tr><td>GodRogers</td><td>Charope</td><td>Charope</td><td class="bold">NobleZain</td></tr>
+      <tr><td>Lasfarc</td><td>SchutzVon</td><td>BruxaDoida</td><td class="bold">TrueBorn</td></tr>
+      <tr><td>RotheoRed</td><td>Alcolezi</td><td>Iris</td><td class="bold">Diana</td></tr>
+      <tr><td>Hansomme</td><td>NobleZaine</td><td>AllenAbel</td><td class="bold">Iris</td></tr>
+      <tr><td>Iris</td><td>GodRogera</td><td>Alcolezi</td><td class="bold">Alcolezi</td></tr>
+      <tr><td>ChavezOprah</td><td>Lasfarc</td><td>Lasfarc</td><td class="bold">GodRogers</td></tr>
+      <tr><td>Flechada</td><td>Lissa</td><td>Diana</td><td class="bold">Charope</td></tr>
+      <tr><td>Depuracion</td><td>TrueBorn</td><td>NobleZaine</td><td class="bold">NobleZaine</td></tr>
+      <tr><td></td><td>Yorihell</td><td>ChavezOprah</td><td></td></tr>
+      <tr><td></td><td>DavidGodit</td><td>Hansomme</td><td></td></tr>
+      <tr><td></td><td>Fidarapariaga</td><td></td><td></td></tr>
+      <tr><td></td><td>Ballard</td><td></td><td></td></tr>
+      <tr><td></td><td>NobleZaine</td><td></td><td></td></tr>
+      <tr><td></td><td>ChavezOprah</td><td></td><td></td></tr>
+      <tr><td></td><td>Hansomme</td><td></td><td></td></tr>
+      <tr><td></td><td>Diana</td><td></td><td></td></tr>
+      <tr><td></td><td>VrauNela</td><td></td><td></td></tr>
+      <tr><td></td><td>Iris</td><td></td><td></td></tr>
+    </tbody>
+  </table>
 </body>
 </html>
