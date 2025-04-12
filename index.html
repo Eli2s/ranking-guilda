@@ -3,46 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <title>Ranking da Guilda</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
-      background-color: #f0f0f0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      font-size: 2.5em;
+      font-weight: 700;
+    }
+
+    form {
+      background: linear-gradient(145deg, #ffffff, #f8f9fa);
+      padding: 15px;
+      margin: 30px auto;
+      width: 85%;
+      max-width: 450px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid #3498db;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    label {
+      display: none;
+    }
+
+    select, input[type="text"] {
+      padding: 8px;
+      border: 1px solid #3498db;
+      border-radius: 6px;
+      margin: 3px;
+      width: 110px;
+      font-size: 0.9em;
+      background: #fff;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: #e74c3c;
+      box-shadow: 0 0 6px rgba(231, 76, 60, 0.5);
+      outline: none;
+    }
+
+    button[type="submit"] {
+      padding: 8px 15px;
+      background: linear-gradient(45deg, #3498db, #e74c3c);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: transform 0.2s, background 0.3s;
+      box-shadow: 0 3px 10px rgba(52, 152, 219, 0.4);
+    }
+
+    button[type="submit"]:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #e74c3c, #3498db);
     }
 
     table {
-      margin: auto;
+      margin: 20px auto;
       border-collapse: collapse;
       width: 90%;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      border-radius: 10px;
+      max-width: 800px;
+      background: linear-gradient(135deg, #ffffff, #f5f7fa);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      border-radius: 15px;
       overflow: hidden;
+      table-layout: fixed;
     }
 
     th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: center;
+      vertical-align: top;
+      width: 200px;
+      min-width: 200px;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     th {
-      background-color: #ffeb3b;
-      color: red;
+      background: linear-gradient(45deg, #ffca28, #f1c40f);
+      font-size: 16px;
+      color: #2c3e50;
+      font-weight: 600;
     }
 
-    td {
-      text-align: center;
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
     }
 
-    .bold {
-      font-weight: bold;
+    .btn {
+      border: none;
+      border-radius: 5px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: 6px;
+      vertical-align: middle;
+      background: #3498db;
+      color: white;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      background: #e74c3c;
+    }
+
+    .remove-btn, .check-btn {
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 2px 4px;
+    }
+
+    .nome-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .nome-container.escolhido {
+      background-color: #a5d6a7;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .nome-container.escolhido span {
+      color: #2e7d32;
+    }
+
+    .botoes-container {
+      display: flex;
+      gap: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>Ranking da Guilda</h1>
-  <table>
+  <h1>Ranking da Guilda - Atualizado em Tempo Real</h1>
+
+  <form onsubmit="adicionarNome(event)" role="form" aria-label="Formulário para adicionar nome ao ranking">
+    <select id="coluna" required aria-label="Selecione a coluna">
+      <option value="0">CHAOS</option>
+      <option value="1">PENA</option>
+      <option value="2">CONDOR</option>
+      <option value="3">AWAKE</option>
+    </select>
+    <input type="text" id="nome" required placeholder="Nome" aria-label="Digite o nome" pattern="[A-Za-z\s]+" title="Somente letras e espaços">
+    <button type="submit" aria-label="Adicionar nome">Adicionar</button>
+  </form>
+
+  <table id="tabela-ranking" role="grid" aria-label="Tabela de ranking da guilda">
     <thead>
       <tr>
         <th>CHAOS</th>
@@ -52,26 +195,187 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Lissa</td><td>ShazamAgroboy</td><td>Lissa</td><td class="bold">Lissa</td></tr>
-      <tr><td>GodRogers</td><td>Charope</td><td>Charope</td><td class="bold">NobleZain</td></tr>
-      <tr><td>Lasfarc</td><td>SchutzVon</td><td>BruxaDoida</td><td class="bold">TrueBorn</td></tr>
-      <tr><td>RotheoRed</td><td>Alcolezi</td><td>Iris</td><td class="bold">Diana</td></tr>
-      <tr><td>Hansomme</td><td>NobleZaine</td><td>AllenAbel</td><td class="bold">Iris</td></tr>
-      <tr><td>Iris</td><td>GodRogera</td><td>Alcolezi</td><td class="bold">Alcolezi</td></tr>
-      <tr><td>ChavezOprah</td><td>Lasfarc</td><td>Lasfarc</td><td class="bold">GodRogers</td></tr>
-      <tr><td>Flechada</td><td>Lissa</td><td>Diana</td><td class="bold">Charope</td></tr>
-      <tr><td>Depuracion</td><td>TrueBorn</td><td>NobleZaine</td><td class="bold">NobleZaine</td></tr>
-      <tr><td></td><td>Yorihell</td><td>ChavezOprah</td><td></td></tr>
-      <tr><td></td><td>DavidGodit</td><td>Hansomme</td><td></td></tr>
-      <tr><td></td><td>Fidarapariaga</td><td></td><td></td></tr>
-      <tr><td></td><td>Ballard</td><td></td><td></td></tr>
-      <tr><td></td><td>NobleZaine</td><td></td><td></td></tr>
-      <tr><td></td><td>ChavezOprah</td><td></td><td></td></tr>
-      <tr><td></td><td>Hansomme</td><td></td><td></td></tr>
-      <tr><td></td><td>Diana</td><td></td><td></td></tr>
-      <tr><td></td><td>VrauNela</td><td></td><td></td></tr>
-      <tr><td></td><td>Iris</td><td></td><td></td></tr>
+      <!-- Linhas serão inseridas dinamicamente aqui -->
     </tbody>
   </table>
+
+  <script>
+    function sanitizeInput(input) {
+      return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
+    }
+
+    function adicionarNome(event) {
+      event.preventDefault();
+      const colunaIndex = parseInt(document.getElementById("coluna").value);
+      let nome = document.getElementById("nome").value;
+      nome = sanitizeInput(nome);
+      if (!nome || !/^[A-Za-z\s]+$/.test(nome)) return;
+
+      const tbody = document.querySelector("#tabela-ranking tbody");
+      let linhaEncontrada = false;
+
+      // Verifica linhas existentes
+      for (let i = 0; i < tbody.rows.length; i++) {
+        const cell = tbody.rows[i].cells[colunaIndex];
+        if (!cell.innerText.trim()) {
+          cell.innerHTML = gerarConteudo(nome);
+          linhaEncontrada = true;
+          break;
+        }
+      }
+
+      // Se não encontrou célula vazia, adiciona nova linha apenas na coluna necessária
+      if (!linhaEncontrada) {
+        const novaLinha = tbody.insertRow();
+        for (let i = 0; i < 4; i++) {
+          const novaCelula = novaLinha.insertCell();
+          if (i === colunaIndex) {
+            novaCelula.innerHTML = gerarConteudo(nome);
+          }
+        }
+      }
+
+      document.getElementById("nome").value = "";
+    }
+
+    function gerarConteudo(nome) {
+      return `
+        <div class="nome-container" role="rowgroup">
+          <span>${nome}</span>
+          <div class="botoes-container">
+            <button class="btn check-btn" onclick="marcarEscolhido(this)" aria-label="Marcar como escolhido">✓</button>
+            <button class="btn remove-btn" onclick="removerNome(this)" aria-label="Remover nome">x</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function marcarEscolhido(botao) {
+      const nomeContainer = botao.closest('.nome-container');
+      const celulaAtual = botao.closest('td');
+      const linhaAtual = celulaAtual.parentElement;
+      const tbody = linhaAtual.parentElement;
+      const colunaIndex = celulaAtual.cellIndex;
+      
+      // Ignora se célula estiver vazia
+      if (!nomeContainer) return;
+
+      // Verifica se já está selecionado
+      const jaSelecionado = nomeContainer.classList.contains('escolhido');
+      
+      // Remove seleção de todos na coluna
+      const todasCelulas = document.querySelectorAll(`#tabela-ranking tbody td:nth-child(${colunaIndex + 1})`);
+      todasCelulas.forEach(cel => {
+        const container = cel.querySelector('.nome-container');
+        if (container) container.classList.remove('escolhido');
+      });
+      
+      // Se não estava selecionado antes, marca e move para o final
+      if (!jaSelecionado) {
+        nomeContainer.classList.add('escolhido');
+        
+        // Move para o final da coluna
+        moverParaFinal(tbody, celulaAtual, colunaIndex);
+      }
+      
+      // Verifica se todos estão marcados
+      verificarTodosMarcados(colunaIndex);
+    }
+
+    function moverParaFinal(tbody, celulaOrigem, colunaIndex) {
+      const conteudo = celulaOrigem.innerHTML;
+      celulaOrigem.innerHTML = '';
+      
+      // Encontra última linha vazia ou cria nova
+      let ultimaLinha = tbody.lastElementChild;
+      if (!ultimaLinha || ultimaLinha.cells[colunaIndex].innerHTML.trim() !== '') {
+        ultimaLinha = tbody.insertRow();
+        // Apenas preenche a célula da coluna atual
+        for (let i = 0; i < 4; i++) {
+          const cell = ultimaLinha.insertCell();
+          if (i === colunaIndex) {
+            cell.innerHTML = conteudo;
+          }
+        }
+      } else {
+        ultimaLinha.cells[colunaIndex].innerHTML = conteudo;
+      }
+      
+      // Compacta a coluna
+      compactarColuna(tbody, colunaIndex);
+    }
+
+    function compactarColuna(tbody, colunaIndex) {
+      const linhas = Array.from(tbody.rows);
+      const colunaData = [];
+      
+      // Coleta todos os conteúdos não vazios da coluna
+      linhas.forEach(linha => {
+        const celula = linha.cells[colunaIndex];
+        if (celula.innerHTML.trim() !== '') {
+          colunaData.push(celula.innerHTML);
+        }
+      });
+      
+      // Limpa todas as células da coluna
+      linhas.forEach(linha => {
+        linha.cells[colunaIndex].innerHTML = '';
+      });
+      
+      // Reorganiza os dados na coluna sem espaços vazios
+      colunaData.forEach((conteudo, index) => {
+        // Garante que há linhas suficientes
+        while (index >= tbody.rows.length) {
+          tbody.insertRow();
+        }
+        // Preenche apenas a célula da coluna atual
+        if (!tbody.rows[index].cells[colunaIndex]) {
+          tbody.rows[index].insertCell(colunaIndex);
+        }
+        tbody.rows[index].cells[colunaIndex].innerHTML = conteudo;
+      });
+      
+      // Remove linhas completamente vazias
+      for (let i = tbody.rows.length - 1; i >= 0; i--) {
+        const linha = tbody.rows[i];
+        if (Array.from(linha.cells).every(c => c.innerHTML.trim() === '')) {
+          tbody.removeChild(linha);
+        }
+      }
+    }
+
+    function verificarTodosMarcados(colunaIndex) {
+      const celulas = document.querySelectorAll(`#tabela-ranking tbody td:nth-child(${colunaIndex + 1})`);
+      let todosMarcados = true;
+      let peloMenosUm = false;
+      
+      for (const cel of celulas) {
+        const container = cel.querySelector('.nome-container');
+        if (container) {
+          peloMenosUm = true;
+          if (!container.classList.contains('escolhido')) {
+            todosMarcados = false;
+          }
+        }
+      }
+      
+      if (peloMenosUm && todosMarcados) {
+        celulas.forEach(cel => {
+          const container = cel.querySelector('.nome-container');
+          if (container) container.classList.remove('escolhido');
+        });
+      }
+    }
+
+    function removerNome(botao) {
+      const celula = botao.closest('td');
+      celula.innerHTML = "";
+      // Remove a linha se estiver vazia
+      const linha = celula.parentElement;
+      if (Array.from(linha.cells).every(c => c.innerHTML.trim() === '')) {
+        linha.parentElement.removeChild(linha);
+      }
+    }
+  </script>
 </body>
 </html>
